@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>আমার কলার দোকানের হিসাব</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fff9df;color:#302a14;font-family:Arial,sans-serif;padding-bottom:88px;overflow-x:hidden}
+header{background:linear-gradient(135deg,#f4c400,#ffe66d);padding:18px 12px;text-align:center;position:sticky;top:0;z-index:10}
+header h1{margin:0;font-size:23px}header div{margin-top:5px;font-size:13px}
+main{max-width:760px;margin:auto;padding:12px}.section{display:none}.section.active{display:block}
+.card{background:#fff;border:1px solid #ead78b;border-radius:18px;padding:15px;margin-bottom:12px;box-shadow:0 4px 15px #80660018}
+h2{margin:0 0 13px;color:#594500;font-size:19px}h3{color:#594500;font-size:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.summary{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.summary>div{background:#fff7cc;padding:12px;border-radius:12px}
+label{display:block;font-size:13px;font-weight:bold}input,textarea,select{width:100%;padding:12px;border:1px solid #d7c577;border-radius:11px;background:#fff;font-size:16px;color:#302a14}
+textarea{min-height:70px;resize:vertical}button{width:100%;border:0;border-radius:11px;padding:12px;background:#f2bd00;color:#352900;font-weight:bold;font-size:15px}
+.green{background:#6d9c06;color:#fff}.blue{background:#e7f1ff;color:#245a91}.red{background:#d9534f;color:#fff}.gray{background:#eee;color:#444}
+.stat{font-size:21px;font-weight:bold;color:#936800;margin-top:3px}.muted{font-size:13px;color:#756c50}.profit{background:#eaf7d7!important;border:1px solid #b7d779}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.three{grid-template-columns:repeat(3,1fr)}
+.customer{border:1px solid #ead78a;border-radius:15px;padding:13px;margin:10px 0;background:#fffdf3}
+.customerTop{display:flex;justify-content:space-between;gap:8px;align-items:center;cursor:pointer}.customerName{font-size:18px;font-weight:bold}
+.pill{background:#f8d84c;border-radius:20px;padding:6px 9px;font-size:12px;font-weight:bold;white-space:nowrap}
+.note{background:#fff7d2;border-radius:10px;padding:9px;margin-top:9px;font-size:13px}
+.box{border:1px solid #ead78a;background:#fffdf2;border-radius:15px;padding:13px;margin:10px 0}
+.history{border-left:4px solid #f1bf00;background:#fffdf3;border-radius:0 10px 10px 0;padding:9px 11px;margin:8px 0;font-size:14px}
+.monthRow{border:1px solid #ead78a;background:#fffdf3;border-radius:12px;padding:11px;margin:8px 0}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}.empty{text-align:center;padding:18px;color:#756c50}
+hr{border:0;border-top:1px solid #ead78a;margin:14px 0}.dateGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tabs{position:fixed;bottom:0;left:0;right:0;z-index:30;background:#fff;border-top:1px solid #e4d38c;box-shadow:0 -4px 15px #0002;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:7px 7px calc(7px + env(safe-area-inset-bottom))}
+.tabs button{background:#fff8d7;color:#715600;font-size:13px;padding:9px 2px}.tabs button.active{background:#f2bd00;color:#302600}.tabs span{display:block;font-size:10px;margin-top:3px}
+@media(max-width:430px){.grid,.dateGrid{grid-template-columns:1fr}.summary{grid-template-columns:1fr 1fr}}
+</style>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#166534"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+<body>
+<header><h1>🍌 আমার কলার দোকানের হিসাব</h1><div id="clock"></div></header>
+
+<main>
+<!-- TODAY -->
+<section id="today" class="section active">
+<div class="card">
+<h2>💰 আজকের লাভ</h2>
+<div class="summary">
+<div><div class="muted">Cash বিক্রি</div><div class="stat" id="cashShow">৳0</div></div>
+<div><div class="muted">বাকি বিক্রি</div><div class="stat" id="creditShow">৳0</div></div>
+<div><div class="muted">মোট বিক্রি</div><div class="stat" id="salesShow">৳0</div></div>
+<div><div class="muted">মোট খরচ</div><div class="stat" id="costShow">৳0</div></div>
+<div class="profit"><div class="muted">আজকের লাভ</div><div class="stat" id="profitShow">৳0</div></div>
+<div><div class="muted">আজকের নতুন বাকি</div><div class="stat" id="dueShow">৳0</div></div>
+</div>
+</div>
+<div class="card">
+<h2>🌅 সকালে কলা কেনার হিসাব</h2>
+<div class="grid">
+<label>🍌 কলা কেনার দাম<input id="buy" type="number" min="0" placeholder="যেমন 5000"></label>
+<label>🚚 গাড়ি/ভাড়া<input id="rent" type="number" min="0" placeholder="যেমন 500"></label>
+<label>💸 অন্যান্য খরচ<input id="other" type="number" min="0" placeholder="যেমন 100"></label>
+<label>💵 Cash বিক্রি<input id="cash" type="number" min="0" placeholder="আজ cash বিক্রি"></label>
+</div>
+<button class="green" style="margin-top:10px" onclick="saveToday()">💾 আজকের হিসাব Save</button>
+</div>
+</section>
+
+<!-- CUSTOMER -->
+<section id="customers" class="section">
+<div class="card">
+<h2>👥 কাস্টমার হিসাব</h2>
+<button onclick="showAddCustomer()">➕ নতুন কাস্টমার যোগ করুন</button>
+<div id="addCustomer"></div>
+<div id="customerList"></div>
+</div>
+</section>
+
+<!-- GOODS -->
+<section id="goods" class="section">
+<div class="card">
+<h2>🍌 মাল ও খরচ</h2>
+<p class="muted">এই তথ্যগুলো আজকের লাভের হিসাবের সাথেও যুক্ত থাকবে।</p>
+<div class="grid">
+<label>কলা কেনার দাম<input id="buy2" type="number" min="0"></label>
+<label>গাড়ি/ভাড়া<input id="rent2" type="number" min="0"></label>
+<label>অন্যান্য খরচ<input id="other2" type="number" min="0"></label>
+<label>Cash বিক্রি<input id="cash2" type="number" min="0"></label>
+</div>
+<p>মোট খরচ: <b class="stat" id="goodsCost">৳0</b></p>
+<button class="green" onclick="saveToday()">💾 Save</button>
+</div>
+</section>
+
+<!-- MONTH -->
+<section id="month" class="section">
+<div class="card">
+<h2>📅 মাসিক লাভ</h2>
+<div class="dateGrid">
+<label>মাস নির্বাচন<input id="month" type="month"></label>
+<button class="blue" style="align-self:end" onclick="renderMonth()">🔎 হিসাব দেখুন</button>
+</div>
+<hr>
+<div class="summary">
+<div><div class="muted">মোট বিক্রি</div><div class="stat" id="msales">৳0</div></div>
+<div><div class="muted">মোট খরচ</div><div class="stat" id="mcost">৳0</div></div>
+<div class="profit"><div class="muted">মাসের মোট লাভ</div><div class="stat" id="mprofit">৳0</div></div>
+<div><div class="muted">হিসাবের দিন</div><div class="stat" id="mdays">0</div></div>
+</div>
+<h3>📋 প্রতিদিনের লাভের তালিকা</h3>
+<div id="monthList"></div>
+</div>
+</section>
+</main>
+
+<nav class="tabs">
+<button class="active" onclick="tab('today',this)">💰<span>আজকের লাভ</span></button>
+<button onclick="tab('customers',this)">👥<span>কাস্টমার</span></button>
+<button onclick="tab('goods',this)">🍌<span>মাল</span></button>
+<button onclick="tab('month',this)">📅<span>মাসিক লাভ</span></button>
+</nav>
+
+<script>
+const DB={day:'kola_day_v9',customers:'kola_customers_v9',daily:'kola_daily_v9'};
+const $=id=>document.getElementById(id);
+const money=n=>'৳'+Math.round(Number(n)||0).toLocaleString('bn-BD');
+const today=()=>{let d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const now=()=>new Date().toLocaleString('bn-BD',{dateStyle:'full',timeStyle:'short'});
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const read=(k,f)=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(f))}catch(e){return f}};
+const write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+const val=id=>Math.max(0,Number($(id).value)||0);
+const dateText=k=>{let p=k.split('-');return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString('bn-BD',{dateStyle:'medium'})};
+
+function tab(id,btn){
+ document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+ $(id).classList.add('active');
+ document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));
+ btn.classList.add('active');
+ window.scrollTo(0,0);
+ if(id==='customers')renderCustomers();
+ if(id==='month')renderMonth();
+}
+
+/* ---------- TODAY ---------- */
+function loadDay(){
+ let d=read(DB.day,{dateKey:today(),buy:0,rent:0,other:0,cash:0});
+ if(d.dateKey!==today()){d={dateKey:today(),buy:0,rent:0,other:0,cash:0};write(DB.day,d)}
+ $('buy').value=d.buy||0;$('rent').value=d.rent||0;$('other').value=d.other||0;$('cash').value=d.cash||0;
+ syncGoods();
+}
+function syncGoods(){
+ $('buy2').value=$('buy').value;$('rent2').value=$('rent').value;$('other2').value=$('other').value;$('cash2').value=$('cash').value;
+}
+function saveInputs(){
+ write(DB.day,{dateKey:today(),buy:$('buy').value,rent:$('rent').value,other:$('other').value,cash:$('cash').value});
+}
+function todayCredit(){
+ return read(DB.customers,[]).reduce((s,c)=>s+Number(c.todayCredit||0),0);
+}
+function calculate(){
+ let cost=val('buy')+val('rent')+val('other'),cash=val('cash'),credit=todayCredit(),sales=cash+credit;
+ $('cashShow').textContent=money(cash);$('creditShow').textContent=money(credit);$('salesShow').textContent=money(sales);
+ $('costShow').textContent=money(cost);$('profitShow').textContent=money(sales-cost);$('dueShow').textContent=money(credit);$('goodsCost').textContent=money(cost);
+ autoDaily();
+}
+['buy','rent','other','cash'].forEach(id=>$(id).addEventListener('input',()=>{saveInputs();syncGoods();calculate()}));
+['buy2','rent2','other2','cash2'].forEach((id,i)=>$(id).addEventListener('input',()=>{
+ let main=['buy','rent','other','cash'][i];$(main).value=$(id).value;saveInputs();calculate();
+}));
+function autoDaily(){
+ let a=read(DB.daily,[]),key=today(),cost=val('buy')+val('rent')+val('other'),cash=val('cash'),credit=todayCredit(),sales=cash+credit;
+ let item={dateKey:key,cash,credit,sales,cost,profit:sales-cost};
+ let old=a.find(x=>x.dateKey===key);if(old)Object.assign(old,item);else a.push(item);write(DB.daily,a);
+}
+function saveToday(){saveInputs();autoDaily();renderMonth();alert('আজকের হিসাব Save হয়েছে।')}
+
+/* ---------- CUSTOMER ---------- */
+function showAddCustomer(){
+ $('addCustomer').innerHTML=`<div class="box">
+ <h3>➕ নতুন কাস্টমার</h3>
+ <label>কাস্টমারের নাম<input id="cname" placeholder="যেমন: রহিম"></label>
+ <label style="margin-top:9px">আগের পাওনা<input id="cold" type="number" min="0" placeholder="যেমন: 2000"></label>
+ <label style="margin-top:9px">পুরোনো হিসাবের নোট (ঐচ্ছিক)<textarea id="coldnote" placeholder="যেমন: গত মাসের বাকি"></textarea></label>
+ <div class="actions"><button class="green" onclick="addCustomer()">✓ কাস্টমার Save</button><button class="gray" onclick="$('addCustomer').innerHTML=''">বাতিল</button></div>
+ </div>`;
+}
+function addCustomer(){
+ let name=$('cname').value.trim(),old=Number($('cold').value)||0,note=$('coldnote').value.trim();
+ if(!name)return alert('কাস্টমারের নাম দিন');
+ let a=read(DB.customers,[]);
+ if(a.some(c=>c.name.toLowerCase()===name.toLowerCase()))return alert('এই কাস্টমার আগে থেকেই আছে');
+ let h=[];
+ if(old>0)h.push({dateKey:'পুরোনো',time:'আগের হিসাব',type:'আগের পাওনা',amount:old,note:note||'কাস্টমার যোগ করার সময় আগের পাওনা'});
+ a.push({id:String(Date.now()),name,oldDue:old,totalDue:old,todayCredit:0,todayCollected:0,history:h});
+ write(DB.customers,a);$('addCustomer').innerHTML='';renderCustomers();calculate();
+}
+function renderCustomers(){
+ let a=read(DB.customers,[]);
+ if(!a.length){$('customerList').innerHTML='<div class="empty">কোনো কাস্টমার নেই। উপরের “নতুন কাস্টমার” চাপুন।</div>';return}
+ $('customerList').innerHTML=a.map((c,i)=>`
+ <div class="customer">
+  <div class="customerTop" onclick="report(${i})">
+   <div class="customerName">👤 ${esc(c.name)}</div><span class="pill">পাওনা ${money(c.totalDue)}</span>
+  </div>
+  <div class="note" onclick="report(${i})">
+   আজকের বাকি বিক্রি: <b>${money(c.todayCredit)}</b><br>
+   আজকের আদায়: <b>${money(c.todayCollected)}</b>
+  </div>
+  <div class="actions">
+   <button class="green" onclick="creditForm(${i})">➕ আজকের বাকি</button>
+   <button class="blue" onclick="collectForm(${i})">💰 বাকি আদায়</button>
+  </div>
+  <div class="actions">
+   <button class="gray" onclick="renameCustomer(${i})">✏️ নাম বদল</button>
+   <button class="red" onclick="removeCustomer(${i})">🗑️ মুছুন</button>
+  </div>
+ </div>`).join('');
+}
+function creditForm(i){
+ let c=read(DB.customers,[])[i],b=document.createElement('div');b.className='box';b.id='actionBox';
+ b.innerHTML=`<b>${esc(c.name)} — আজকের বাকি বিক্রি</b>
+ <label style="margin-top:9px">টাকার পরিমাণ<input id="amt" type="number" min="0"></label>
+ <label style="margin-top:9px">নোট<textarea id="cnote" placeholder="যেমন: ২ ঝুড়ি কলা"></textarea></label>
+ <div class="actions"><button class="green" onclick="saveCredit(${i})">✓ Save</button><button class="gray" onclick="this.parentElement.parentElement.remove()">বাতিল</button></div>`;
+ $('customerList').appendChild(b);b.scrollIntoView({behavior:'smooth'});
+}
+function saveCredit(i){
+ let a=read(DB.customers,[]),c=a[i],amount=Number($('amt').value)||0,note=$('cnote').value.trim();
+ if(!amount)return alert('টাকার পরিমাণ দিন');
+ c.totalDue+=amount;c.todayCredit+=amount;c.history.push({dateKey:today(),time:now(),type:'বাকি বিক্রি',amount,note});
+ write(DB.customers,a);$('actionBox').remove();renderCustomers();calculate();
+}
+function collectForm(i){
+ let a=read(DB.customers,[]),c=a[i],b=document.createElement('div');b.className='box';b.id='actionBox';
+ b.innerHTML=`<b>${esc(c.name)} — পাওনা আদায়</b><p>বর্তমান পাওনা: <b>${money(c.totalDue)}</b></p>
+ <label>আদায়ের পরিমাণ<input id="amt" type="number" min="0"></label>
+ <label style="margin-top:9px">নোট<textarea id="cnote" placeholder="যেমন: পুরোনো বাকি থেকে টাকা দিল"></textarea></label>
+ <div class="actions"><button class="green" onclick="saveCollection(${i})">✓ Save</button><button class="gray" onclick="this.parentElement.parentElement.remove()">বাতিল</button></div>`;
+ $('customerList').appendChild(b);b.scrollIntoView({behavior:'smooth'});
+}
+function saveCollection(i){
+ let a=read(DB.customers,[]),c=a[i],amount=Number($('amt').value)||0,note=$('cnote').value.trim();
+ if(!amount)return alert('আদায়ের পরিমাণ দিন');
+ if(amount>c.totalDue)return alert('পাওনার চেয়ে বেশি টাকা আদায় করা যাবে না');
+ c.totalDue-=amount;c.todayCollected+=amount;c.history.push({dateKey:today(),time:now(),type:'পাওনা আদায়',amount,note});
+ write(DB.customers,a);$('actionBox').remove();renderCustomers();calculate();
+}
+function renameCustomer(i){
+ let a=read(DB.customers,[]),n=prompt('কাস্টমারের নতুন নাম',a[i].name);if(!n)return;
+ a[i].name=n.trim();write(DB.customers,a);renderCustomers();
+}
+function removeCustomer(i){
+ let a=read(DB.customers,[]);if(!confirm('এই কাস্টমারের সব হিসাব মুছে ফেলবেন?'))return;
+ a.splice(i,1);write(DB.customers,a);renderCustomers();calculate();
+}
+
+/* ---------- REPORT BY DATE ---------- */
+function report(i,filter='all'){
+ let a=read(DB.customers,[]),c=a[i];if(!c)return;
+ document.getElementById('reportBox')?.remove();
+ let dates=[...new Set(c.history.map(x=>x.dateKey).filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x)))].sort().reverse();
+ let opts='<option value="all">সব তারিখ</option>'+dates.map(d=>`<option value="${d}" ${filter===d?'selected':''}>${dateText(d)}</option>`).join('');
+ let list=c.history.filter(x=>filter==='all'||x.dateKey===filter).slice().reverse();
+ let b=document.createElement('div');b.id='reportBox';b.className='box';
+ b.innerHTML=`<h2>👤 ${esc(c.name)} — রিপোর্ট</h2>
+ <p>বর্তমান মোট পাওনা: <b>${money(c.totalDue)}</b></p>
+ <div class="dateGrid"><label>📅 তারিখ<select onchange="report(${i},this.value)">${opts}</select></label><button class="blue" style="align-self:end" onclick="report(${i},'all')">সব হিসাব</button></div>
+ <h3>📝 ${filter==='all'?'সব দিনের হিসাব':dateText(filter)+'-এর হিসাব'}</h3>
+ ${list.map(x=>`<div class="history"><b>${esc(x.type)} — ${money(x.amount)}</b><br>${esc(x.note||'কোনো নোট নেই')}<br><span class="muted">${esc(x.time||x.dateKey)}</span></div>`).join('')||'<div class="empty">এই তারিখে কোনো হিসাব নেই।</div>'}
+ <button class="gray" onclick="this.parentElement.remove()">বন্ধ করুন</button>`;
+ $('customerList').prepend(b);b.scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- MONTHLY ---------- */
+function renderMonth(){
+ let key=$('month').value||today().slice(0,7);$('month').value=key;
+ let a=read(DB.daily,[]).filter(x=>x.dateKey.startsWith(key)).sort((x,y)=>y.dateKey.localeCompare(x.dateKey));
+ let sales=a.reduce((s,x)=>s+Number(x.sales||0),0),cost=a.reduce((s,x)=>s+Number(x.cost||0),0),profit=a.reduce((s,x)=>s+Number(x.profit||0),0);
+ $('msales').textContent=money(sales);$('mcost').textContent=money(cost);$('mprofit').textContent=money(profit);$('mdays').textContent=a.length.toLocaleString('bn-BD');
+ $('monthList').innerHTML=a.map(x=>`<div class="monthRow">
+ <b>📅 ${dateText(x.dateKey)}</b><br>
+ Cash বিক্রি: ${money(x.cash)}<br>
+ বাকি বিক্রি: ${money(x.credit)}<br>
+ মোট বিক্রি: <b>${money(x.sales)}</b><br>
+ মোট খরচ: ${money(x.cost)}<br>
+ <b>💰 ওই দিনের লাভ: ${money(x.profit)}</b>
+ </div>`).join('')||'<div class="empty">এই মাসে এখনো কোনো হিসাব Save হয়নি।</div>';
+}
+
+/* ---------- INIT ---------- */
+function resetNewDay(){
+ let d=read(DB.day,{});
+ if(d.dateKey!==today()){
+  write(DB.day,{dateKey:today(),buy:0,rent:0,other:0,cash:0});
+  let a=read(DB.customers,[]);
+  a.forEach(c=>{c.todayCredit=0;c.todayCollected=0});
+  write(DB.customers,a);
+ }
+}
+function init(){
+ resetNewDay();loadDay();$('clock').textContent=now();setInterval(()=>$('clock').textContent=now(),1000);
+ $('month').value=today().slice(0,7);calculate();renderCustomers();renderMonth();
+}
+init();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
+</script>
+
+</body>
+</html>
