@@ -1,0 +1,16 @@
+{
+  "name": "আমার ব্যবসা আমার হিসাব",
+  "short_name": "আমার হিসাব",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fffcf5",
+  "theme_color": "#f59e0b",
+  "lang": "bn",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
