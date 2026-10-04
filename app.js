@@ -1,133 +1,4 @@
-<!doctype html>
-<html lang="bn">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0f766e">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<link rel="manifest" href="manifest.webmanifest">
-<title>আমার ব্যবসা আমার হিসাব</title>
-<style>
-:root{--primary:#6d8fe8;--primary2:#86a4ee;--soft:#eef3ff;--bg:#f8faff;--card:#fff;--text:#253044;--muted:#718096;--line:#e7ebf3;--red:#d97777;--amber:#dca653;--blue:#7099e8;--green:#5aad87;--shadow:0 6px 24px rgba(70,90,125,.07)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans Bengali","Segoe UI",sans-serif;padding-bottom:82px}
-button,input,select,textarea{font:inherit}button{cursor:pointer} .app{max-width:1180px;margin:auto}
-.top{background:linear-gradient(135deg,#7e9fee,#a9bff5);color:#fff;padding:18px 18px 24px;border-radius:0 0 24px 24px;box-shadow:var(--shadow)}
-.topline{display:flex;justify-content:space-between;align-items:center;gap:10px}.brand{font-weight:900;font-size:21px}.date{font-size:12px;opacity:.82;margin-top:3px}
-.iconbtn{width:40px;height:40px;border:1px solid #ffffff33;background:#ffffff18;color:#fff;border-radius:12px}
-main{padding:14px}.page{display:none}.page.active{display:block}
-.hero{margin-top:-10px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:var(--shadow)}
-.hero h2{margin:0;font-size:17px}.hero .big{font-size:29px;font-weight:900;margin:6px 0}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}.stat{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:13px;box-shadow:var(--shadow)}.stat .label{font-size:12px;color:var(--muted)}.stat b{display:block;font-size:20px;margin-top:5px}.stat .mini{font-size:11px;color:var(--muted);margin-top:3px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px;box-shadow:var(--shadow);margin:12px 0}.card h3{margin:0 0 12px;font-size:16px}
-.sectionTitle{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:18px 0 8px}.sectionTitle h2{font-size:18px;margin:0}.muted{color:var(--muted);font-size:12px}
-label{display:block;font-size:12px;font-weight:800;color:#475467;margin:8px 0 5px}input,select,textarea{width:100%;border:1px solid #d8dee7;background:#fff;border-radius:10px;padding:11px 12px;outline:none}input:focus,select:focus,textarea:focus{border-color:#5eead4;box-shadow:0 0 0 3px #99f6e433}textarea{min-height:75px}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.row .fit{flex:0 0 auto}
-.btn{border:0;border-radius:10px;padding:10px 13px;font-weight:800;background:var(--primary);color:#fff}.btn.secondary{background:#eef3ff;color:#5876c2}.btn.gray{background:#eef1f4;color:#344054}.btn.danger{background:#fdeeee;color:#ad6060}.btn.blue{background:#edf3ff;color:#567fcf}.btn.amber{background:#fff5e1;color:#9d712e}
-.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.quick button{border:1px solid var(--line);background:#fff;border-radius:14px;padding:13px 8px;text-align:left;box-shadow:var(--shadow)}.quick strong{display:block;font-size:13px}.quick span{font-size:11px;color:var(--muted)}
-.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:620px;font-size:13px}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f8fafc;white-space:nowrap}
-.money{font-variant-numeric:tabular-nums}.pos{color:var(--green)}.neg{color:var(--red)}.warn{color:var(--amber)}
-.badge{display:inline-block;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:800;background:#eef2f7}.badge.green{background:#e9f7ef;color:#3d8965}.badge.red{background:#fdeeee;color:#ad6060}.badge.blue{background:#edf3ff;color:#567fcf}
-.list{display:grid;gap:8px}.item{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.item .toprow{display:flex;justify-content:space-between;gap:8px}.item strong{font-size:14px}.item small{color:var(--muted)}
-.empty{text-align:center;color:var(--muted);padding:24px 10px}.search{margin-bottom:10px}
-.bottom{position:fixed;z-index:50;left:0;right:0;bottom:0;background:rgba(255,255,255,.97);border-top:1px solid var(--line);padding:7px max(8px,env(safe-area-inset-left)) calc(7px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,1fr);box-shadow:0 -8px 25px rgba(16,24,40,.08)}.bottom button{border:0;background:none;color:#667085;padding:5px 2px;font-size:10px;font-weight:800}.bottom button .ico{display:block;font-size:20px;line-height:20px;margin-bottom:2px}.bottom button.active{color:var(--primary)}
-.modal{position:fixed;inset:0;background:#0008;z-index:100;display:none;align-items:flex-end;justify-content:center}.modal.show{display:flex}.sheet{background:#fff;width:min(620px,100%);max-height:90vh;overflow:auto;border-radius:22px 22px 0 0;padding:18px}.sheet h2{margin:0 0 12px}.close{float:right;border:0;background:#eef1f4;border-radius:10px;padding:8px}
-.toast{position:fixed;z-index:200;left:50%;bottom:92px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 15px;border-radius:12px;font-size:13px;display:none;max-width:90%;text-align:center}.toast.show{display:block}
-@media(max-width:800px){.cards{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}.quick{grid-template-columns:1fr 1fr}.grid3{grid-template-columns:1fr 1fr}}
-@media(min-width:801px){body{padding-bottom:20px}.bottom{position:sticky;top:0;max-width:1180px;margin:auto;border:0;box-shadow:none;border-radius:0 0 16px 16px;grid-template-columns:repeat(5,1fr);background:#fff}.bottom button{font-size:12px}.bottom button .ico{display:inline;font-size:17px;margin-right:4px}.bottom{top:0}}
-</style>
-</head>
-<body>
-<div class="app">
-<header class="top">
-  <div class="topline"><div><div class="brand">আমার ব্যবসা আমার হিসাব</div><div class="date" id="todayText"></div></div><button class="iconbtn" onclick="openModal('settingsModal')">⚙️</button></div>
-</header>
 
-<main>
-<section id="home" class="page active">
-  <div class="hero"><h2>আজকের হিসাব</h2><div class="big money" id="todayProfit">৳0</div><div class="muted">আজকের বিক্রি ও খরচের ভিত্তিতে আনুমানিক লাভ</div></div>
-  <div class="cards">
-    <div class="stat"><div class="label">মোট বিক্রি</div><b id="todaySales">৳0</b><div class="mini">নগদ + বাকি</div></div>
-    <div class="stat"><div class="label">আজকের খরচ</div><b id="todayExpense">৳0</b><div class="mini">ক্রয় + পরিবহন + অন্যান্য</div></div>
-    <div class="stat"><div class="label">আজ বাকি</div><b id="todayCredit">৳0</b><div class="mini">গ্রাহকের কাছে</div></div>
-    <div class="stat"><div class="label">আজ আদায়</div><b id="todayCollection">৳0</b><div class="mini">পুরোনো বাকি</div></div>
-  </div>
-  <div class="sectionTitle"><h2>দ্রুত কাজ</h2></div>
-  <div class="quick">
-    <button onclick="openSale('cash')"><strong>💵 নগদ বিক্রি</strong><span>আজকের ক্যাশ বিক্রি যোগ করুন</span></button>
-    <button onclick="openSale('credit')"><strong>👤 বাকি বিক্রি</strong><span>কাস্টমারের হিসাবে যোগ করুন</span></button>
-    <button onclick="openExpense()"><strong>🧾 খরচ যোগ</strong><span>ক্রয়, ভাড়া বা অন্যান্য</span></button>
-    <button onclick="openCollection()"><strong>💰 বাকি আদায়</strong><span>পুরোনো বাকি আদায়ের হিসাব</span></button>
-  </div>
-  <div class="grid2">
-    <div class="card"><h3>আজকের বাকি — কাকে কত?</h3><div id="todayCreditList" class="list"></div></div>
-    <div class="card"><h3>সাম্প্রতিক কার্যক্রম</h3><div id="activityList" class="list"></div></div>
-  </div>
-</section>
-
-<section id="sales" class="page">
-  <div class="sectionTitle"><h2>বিক্রি</h2><button class="btn" onclick="openSale('cash')">+ বিক্রি</button></div>
-  <div class="cards">
-    <div class="stat"><div class="label">আজ নগদ</div><b id="salesCash">৳0</b></div>
-    <div class="stat"><div class="label">আজ বাকি</div><b id="salesCredit">৳0</b></div>
-    <div class="stat"><div class="label">আজ মোট</div><b id="salesTotal">৳0</b></div>
-    <div class="stat"><div class="label">মাসের বিক্রি</div><b id="monthSales">৳0</b></div>
-  </div>
-  <div class="card"><h3>তারিখ অনুযায়ী বিক্রি</h3><div class="row"><div><label>শুরু</label><input type="date" id="salesFrom"></div><div><label>শেষ</label><input type="date" id="salesTo"></div><button class="btn fit" onclick="renderSalesReport()">দেখুন</button></div><div id="salesReport" class="tablewrap" style="margin-top:12px"></div></div>
-</section>
-
-<section id="customers" class="page">
-  <div class="sectionTitle"><h2>কাস্টমার</h2><button class="btn" onclick="openCustomer()">+ কাস্টমার</button></div>
-  <div class="cards">
-    <div class="stat"><div class="label">মোট কাস্টমার</div><b id="customerCount">0</b></div>
-    <div class="stat"><div class="label">মোট বাকি</div><b id="totalDue">৳0</b></div>
-    <div class="stat"><div class="label">আজ নতুন বাকি</div><b id="customerTodayCredit">৳0</b></div>
-    <div class="stat"><div class="label">আজ আদায়</div><b id="customerTodayCollection">৳0</b></div>
-  </div>
-  <div class="card"><input class="search" id="customerSearch" placeholder="কাস্টমারের নাম বা মোবাইল দিয়ে খুঁজুন..." oninput="renderCustomers()"><div id="customerList" class="list"></div></div>
-</section>
-
-<section id="reports" class="page">
-  <div class="sectionTitle"><h2>রিপোর্ট</h2></div>
-  <div class="card">
-    <div class="row"><div><label>মাস</label><input type="month" id="reportMonth" onchange="renderMonthlyReport()"></div><button class="btn fit" onclick="renderMonthlyReport()">রিফ্রেশ</button></div>
-    <div class="cards">
-      <div class="stat"><div class="label">মোট বিক্রি</div><b id="rSales">৳0</b></div>
-      <div class="stat"><div class="label">মোট খরচ</div><b id="rExpense">৳0</b></div>
-      <div class="stat"><div class="label">নিট লাভ</div><b id="rProfit">৳0</b></div>
-      <div class="stat"><div class="label">বাকি আদায়</div><b id="rCollection">৳0</b></div>
-    </div>
-    <div id="monthlyTable" class="tablewrap"></div>
-  </div>
-  <div class="card"><h3>কাস্টমার বাকি রিপোর্ট</h3><div class="row"><div><label>কাস্টমার</label><select id="reportCustomer" onchange="renderCustomerReport()"></select></div><div><label>তারিখ</label><input type="date" id="reportCustomerDate" onchange="renderCustomerReport()"></div></div><div id="customerReport" style="margin-top:12px"></div></div>
-</section>
-
-<section id="more" class="page">
-  <div class="sectionTitle"><h2>আরও</h2></div>
-  <div class="grid2">
-    <div class="card"><h3>📦 পণ্য ও খরচ</h3><div class="row"><button class="btn" onclick="openPurchase()">ক্রয় যোগ</button><button class="btn secondary" onclick="openExpense()">খরচ যোগ</button></div><div id="expenseSummary" class="list" style="margin-top:10px"></div></div>
-    <div class="card"><h3>💼 ক্যাশবুক</h3><div id="cashbookSummary" class="list"></div></div>
-    <div class="card"><h3>💾 ব্যাকআপ</h3><p class="muted">ব্যাকআপ ফাইল ডাউনলোড করে আপনার Google Drive-এ রাখতে পারবেন।</p><div class="row"><button class="btn" onclick="backup()">⬇️ ব্যাকআপ</button><button class="btn secondary" onclick="openDrive()">☁️ Google Drive</button><button class="btn gray" onclick="document.getElementById('restoreFile').click()">↩️ রিস্টোর</button><input id="restoreFile" type="file" accept=".json" hidden onchange="restore(event)"></div></div>
-    <div class="card"><h3>🛠️ অ্যাপ সেটিংস</h3><div class="row"><button class="btn secondary" onclick="openModal('settingsModal')">সেটিংস</button><button class="btn danger" onclick="resetData()">সব ডাটা মুছুন</button></div></div>
-  </div>
-</section>
-</main>
-
-<nav class="bottom">
-  <button data-page="home" class="active" onclick="go('home')"><span class="ico">⌂</span>হোম</button>
-  <button data-page="sales" onclick="go('sales')"><span class="ico">৳</span>বিক্রি</button>
-  <button data-page="customers" onclick="go('customers')"><span class="ico">♙</span>কাস্টমার</button>
-  <button data-page="reports" onclick="go('reports')"><span class="ico">▥</span>রিপোর্ট</button>
-  <button data-page="more" onclick="go('more')"><span class="ico">☰</span>আরও</button>
-</nav>
-</div>
-
-<div id="modal" class="modal" onclick="if(event.target===this)closeModal()"><div class="sheet" id="sheet"></div></div>
-<div id="settingsModal" class="modal" onclick="if(event.target===this)closeModal()"><div class="sheet"><button class="close" onclick="closeModal()">✕</button><h2>অ্যাপ সেটিংস</h2><p class="muted">দোকান/ব্যবসার নাম</p><input id="businessName" value="আমার ব্যবসা আমার হিসাব"><button class="btn" style="margin-top:10px" onclick="saveBusinessName()">সংরক্ষণ</button></div></div>
-<div id="toast" class="toast"></div>
-
-<script>
 const KEY='kola_full_v12';
 let db=loadDB();
 function loadDB(){
@@ -223,13 +94,9 @@ function renderMore(){
  let m=monthTotals(monthNow());document.getElementById('expenseSummary').innerHTML=`<div class="item">পণ্য ক্রয় <b class="money">${money(sumType('purchase',monthNow()))}</b></div><div class="item">ভাড়া/পরিবহন <b class="money">${money(sumType('rent',monthNow()))}</b></div><div class="item">অন্যান্য <b class="money">${money(sumType('other',monthNow()))}</b></div>`;document.getElementById('cashbookSummary').innerHTML=`<div class="item">এই মাসে বিক্রি <b>${money(m.sales)}</b></div><div class="item">এই মাসে খরচ <b>${money(m.expense)}</b></div><div class="item">নিট লাভ <b class="${m.profit>=0?'pos':'neg'}">${money(m.profit)}</b></div><div class="item">বাকি আদায় <b>${money(m.collection)}</b></div>`;
 }
 function sumType(type,m){return Object.entries(db.days).filter(([d])=>d.startsWith(m)).reduce((a,[,x])=>a+(x[type]||0),0)}
-function openDrive(){window.open('https://drive.google.com/drive/my-drive','_blank')}
-function backup(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='amar-byabsha-amar-hisab-backup-'+today()+'.json';a.click();URL.revokeObjectURL(a.href);toast('ব্যাকআপ ডাউনলোড হয়েছে')}
+function openDrive(){window.open('https://drive.google.com/drive/my-drive','_blank')}\nfunction backup(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='amar-byabsha-amar-hisab-backup-'+today()+'.json';a.click();URL.revokeObjectURL(a.href);toast('ব্যাকআপ ডাউনলোড হয়েছে')}
 function restore(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.days||!x.customers)throw 0;if(confirm('বর্তমান হিসাবের জায়গায় এই ব্যাকআপ বসাবেন?')){db=x;save();toast('ব্যাকআপ রিস্টোর হয়েছে')}}catch(err){toast('ব্যাকআপ ফাইল সঠিক নয়')}};r.readAsText(f);e.target.value=''}
 function resetData(){if(!confirm('সব হিসাব মুছে ফেলবেন?'))return;if(!confirm('শেষবার নিশ্চিত করুন — এই কাজ ফেরত আনা যাবে না।'))return;localStorage.removeItem(KEY);db=loadDB();renderAll();toast('সব হিসাব মুছে দেওয়া হয়েছে')}
 function saveBusinessName(){toast('নাম সংরক্ষণ হয়েছে');closeModal()}
 function renderAll(){document.getElementById('todayText').textContent=new Date().toLocaleDateString('bn-BD',{weekday:'long',year:'numeric',month:'long',day:'numeric'});renderHome();renderSales();renderCustomers();renderMonthlyReport();renderMore()}
 document.getElementById('reportMonth').value=monthNow();renderAll();
-</script>
-</body>
-</html>

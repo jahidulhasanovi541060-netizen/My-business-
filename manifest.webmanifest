@@ -1,20 +1,16 @@
 {
-  "name": "আমার কলার দোকানের হিসাব",
-  "short_name": "কলার হিসাব",
-  "description": "কলার দোকানের দৈনিক বিক্রি, খরচ, বাকি ও লাভের হিসাব",
+  "name": "আমার ব্যবসা আমার হিসাব",
+  "short_name": "আমার হিসাব",
   "start_url": "./",
-  "scope": "./",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#166534",
+  "background_color": "#f8faff",
+  "theme_color": "#7e9fee",
   "lang": "bn",
-  "dir": "ltr",
   "icons": [
     {
-      "src": "./icon.svg",
+      "src": "icon.svg",
       "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/svg+xml"
     }
   ]
 }
